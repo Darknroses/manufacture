@@ -45,14 +45,12 @@ msgstr "Actif"
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_qc_inspection__activity_ids
 #, fuzzy
-#| msgid "Active"
 msgid "Activities"
 msgstr "Actif"
 
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_qc_inspection__activity_state
 #, fuzzy
-#| msgid "Active"
 msgid "Activity State"
 msgstr "Actif"
 
@@ -615,6 +613,7 @@ msgstr "Déclencheur de contrôle qualité"
 #: model:ir.model.fields,field_description:quality_control.field_product_template__qc_triggers
 #: model_terms:ir.ui.view,arch_db:quality_control.product_category_qc_form_view
 #: model_terms:ir.ui.view,arch_db:quality_control.product_template_qc_form_view
+#: model_terms:ir.ui.view,arch_db:quality_control.qc_trigger_tree2_view
 #: model_terms:ir.ui.view,arch_db:quality_control.qc_trigger_tree_view
 msgid "Quality control triggers"
 msgstr ""
@@ -720,7 +719,6 @@ msgstr "Responsable"
 #. module: quality_control
 #: model:ir.model.fields,field_description:quality_control.field_qc_inspection__activity_user_id
 #, fuzzy
-#| msgid "Responsible"
 msgid "Responsible User"
 msgstr "Responsable"
 
@@ -758,7 +756,6 @@ msgstr ""
 #. module: quality_control
 #: model:ir.model,name:quality_control.model_qc_inspection_set_test
 #, fuzzy
-#| msgid "Quality control inspection"
 msgid "Set test for inspection"
 msgstr "Inspection de contrôle qualité"
 
@@ -865,6 +862,12 @@ msgstr ""
 #: model:ir.model.fields,field_description:quality_control.field_qc_trigger_product_line__trigger
 #: model:ir.model.fields,field_description:quality_control.field_qc_trigger_product_template_line__trigger
 msgid "Trigger"
+msgstr ""
+
+#. module: quality_control
+#: model:ir.actions.act_window,name:quality_control.action_qc_trigger
+#: model:ir.ui.menu,name:quality_control.qc_trigger_menu
+msgid "Triggers"
 msgstr ""
 
 #. module: quality_control

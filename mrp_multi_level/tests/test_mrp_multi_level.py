@@ -1,9 +1,11 @@
-# Copyright 2018-19 Eficent Business and IT Consulting Services S.L.
+# Copyright 2018-21 ForgeFlow S.L. (https://www.forgeflow.com)
 #   (http://www.eficent.com)
 # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl.html).
 
 from odoo.addons.mrp_multi_level.tests.common import TestMrpMultiLevelCommon
 from odoo import fields
+
+from datetime import date, datetime
 
 
 class TestMrpMultiLevel(TestMrpMultiLevelCommon):
@@ -24,9 +26,12 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         self.assertEqual(product_mrp_area.supply_method, 'buy')
         self.assertEqual(product_mrp_area.main_supplier_id, self.vendor)
         self.assertEqual(product_mrp_area.qty_available, 10.0)
-        product_mrp_area = self.product_mrp_area_obj.search([
-            ('product_id', '=', self.sf_1.id)])
-        self.assertEqual(product_mrp_area.supply_method, 'manufacture')
+        product_mrp_area = self.product_mrp_area_obj.search(
+            [("product_id", "=", self.sf_1.id)]
+        )
+        self.assertEqual(product_mrp_area.supply_method, "manufacture")
+        self.assertFalse(product_mrp_area.main_supplier_id)
+        self.assertFalse(product_mrp_area.main_supplierinfo_id)
 
     def test_03_mrp_moves(self):
         """Tests for mrp moves generated."""
@@ -264,3 +269,62 @@ class TestMrpMultiLevel(TestMrpMultiLevelCommon):
         self.assertEqual(mrp_invs[0].to_procure, 130)
         # Net needs = 18, available on-hand = 3 -> 15
         self.assertEqual(mrp_invs[1].to_procure, 15)
+
+    def test_bom_line_attribute_value_skip(self):
+        """Check for the correct demand on components of a product with
+        multiple variants"""
+        # No demand or supply for AV-12 or AV-21
+        av_12_supply = self.mrp_inventory_obj.search([
+            ('product_mrp_area_id.product_id', '=', self.av_12.id)
+        ])
+        self.assertFalse(av_12_supply)
+        av_21_supply = self.mrp_inventory_obj.search([
+            ('product_mrp_area_id.product_id', '=', self.av_21.id)
+        ])
+        self.assertFalse(av_21_supply)
+        # Supply for AV-11 and AV-22
+        av_11_supply = self.mrp_inventory_obj.search([
+            ('product_mrp_area_id.product_id', '=', self.av_11.id)
+        ])
+        self.assertTrue(av_11_supply)
+        av_22_supply = self.mrp_inventory_obj.search([
+            ('product_mrp_area_id.product_id', '=', self.av_22.id)
+        ])
+        self.assertTrue(av_22_supply)
+
+    def test_13_timezone_handling(self):
+        self.calendar.tz = "Australia/Sydney"  # Oct-Apr/Apr-Oct: UTC+11/UTC+10
+        date_move = datetime(2090, 4, 19, 20, 00)  # Apr 20 6/7 am in Sidney
+        sidney_date = date(2090, 4, 20)
+        self._create_picking_in(
+            self.product_tz, 10.0, date_move, location=self.cases_loc
+        )
+        self.mrp_multi_level_wiz.create(
+            {"mrp_area_ids": [(6, 0, self.cases_area.ids)]}
+        ).run_mrp_multi_level()
+        inventory = self.mrp_inventory_obj.search(
+            [
+                ("mrp_area_id", "=", self.cases_area.id),
+                ("product_id", "=", self.product_tz.id),
+            ]
+        )
+        self.assertEqual(len(inventory), 1)
+        self.assertEqual(inventory.date, sidney_date)
+
+    def test_14_timezone_not_set(self):
+        self.wh.calendar_id = False
+        date_move = datetime(2090, 4, 19, 20, 00)
+        self._create_picking_in(
+            self.product_tz, 10.0, date_move, location=self.cases_loc
+        )
+        self.mrp_multi_level_wiz.create(
+            {"mrp_area_ids": [(6, 0, self.cases_area.ids)]}
+        ).run_mrp_multi_level()
+        inventory = self.mrp_inventory_obj.search(
+            [
+                ("mrp_area_id", "=", self.cases_area.id),
+                ("product_id", "=", self.product_tz.id),
+            ]
+        )
+        self.assertEqual(len(inventory), 1)
+        self.assertEqual(inventory.date, date_move.date())
