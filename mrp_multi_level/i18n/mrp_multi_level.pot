@@ -14,6 +14,30 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: mrp_multi_level
+#: model:product.product,name:mrp_multi_level.product_product_av_11
+#: model:product.template,name:mrp_multi_level.product_product_av_11_product_template
+msgid "AV-11 steel"
+msgstr ""
+
+#. module: mrp_multi_level
+#: model:product.product,name:mrp_multi_level.product_product_av_12
+#: model:product.template,name:mrp_multi_level.product_product_av_12_product_template
+msgid "AV-12 aluminium"
+msgstr ""
+
+#. module: mrp_multi_level
+#: model:product.product,name:mrp_multi_level.product_product_av_21
+#: model:product.template,name:mrp_multi_level.product_product_av_21_product_template
+msgid "AV-21 white"
+msgstr ""
+
+#. module: mrp_multi_level
+#: model:product.product,name:mrp_multi_level.product_product_av_22
+#: model:product.template,name:mrp_multi_level.product_product_av_22_product_template
+msgid "AV-22 black"
+msgstr ""
+
+#. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_planned_order__mrp_action
 msgid "Action"
 msgstr ""
@@ -47,6 +71,7 @@ msgid "Associated MRP Inventory"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_inventory_procure_item__supply_method__buy
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__product_mrp_area__supply_method__buy
 msgid "Buy"
 msgstr ""
@@ -127,17 +152,7 @@ msgstr ""
 
 #. module: mrp_multi_level
 #: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_inventory_search
-msgid "Date to Procure (By Day)"
-msgstr ""
-
-#. module: mrp_multi_level
-#: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_inventory_search
-msgid "Date to Procure (By Month)"
-msgstr ""
-
-#. module: mrp_multi_level
-#: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_inventory_search
-msgid "Date to Procure (By Week)"
+msgid "Date to Procure"
 msgstr ""
 
 #. module: mrp_multi_level
@@ -171,6 +186,7 @@ msgstr ""
 
 #. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_planned_order__due_date
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_planned_order_view_search
 msgid "Due Date"
 msgstr ""
 
@@ -198,6 +214,7 @@ msgstr ""
 
 #. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_planned_order__fixed
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_planned_order_view_search
 msgid "Fixed"
 msgstr ""
 
@@ -212,8 +229,21 @@ msgid "Forecasted Inventory"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.product_mrp_area_form
+msgid "Get from main supplier"
+msgstr ""
+
+#. module: mrp_multi_level
 #: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_inventory_search
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_planned_order_view_search
 msgid "Group By..."
+msgstr ""
+
+#. module: mrp_multi_level
+#: code:addons/mrp_multi_level/wizards/mrp_multi_level.py:0
+#: code:addons/mrp_multi_level/wizards/mrp_multi_level.py:0
+#, python-format
+msgid "Grouped Demand of %(product_name)s for %(delta_days)d Days"
 msgstr ""
 
 #. module: mrp_multi_level
@@ -237,6 +267,11 @@ msgstr ""
 #. module: mrp_multi_level
 #: model:ir.model.fields,help:mrp_multi_level.field_mrp_multi_level__mrp_area_ids
 msgid "If empty, all areas will be computed."
+msgstr ""
+
+#. module: mrp_multi_level
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.product_mrp_area_form
+msgid "Incoming Moves"
 msgstr ""
 
 #. module: mrp_multi_level
@@ -306,6 +341,11 @@ msgstr ""
 #. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_product_product__llc
 msgid "Low Level Code"
+msgstr ""
+
+#. module: mrp_multi_level
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_planned_order_view_form
+msgid "MOs"
 msgstr ""
 
 #. module: mrp_multi_level
@@ -420,6 +460,7 @@ msgid "Manufacturing Order"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_planned_order__mrp_production_ids
 #: model:ir.model.fields,field_description:mrp_multi_level.field_product_product__manufacturing_order_ids
 msgid "Manufacturing Orders"
 msgstr ""
@@ -432,6 +473,11 @@ msgstr ""
 #. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_product_mrp_area__mrp_minimum_order_qty
 msgid "Minimum Order Qty"
+msgstr ""
+
+#. module: mrp_multi_level
+#: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_planned_order__mo_count
+msgid "Mo Count"
 msgstr ""
 
 #. module: mrp_multi_level
@@ -511,6 +557,11 @@ msgid "Origin"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.product_mrp_area_form
+msgid "Outgoing Moves"
+msgstr ""
+
+#. module: mrp_multi_level
 #: model:product.product,name:mrp_multi_level.product_product_pp_1
 #: model:product.template,name:mrp_multi_level.product_product_pp_1_product_template
 msgid "PP-1"
@@ -546,12 +597,17 @@ msgstr ""
 #: model:ir.model,name:mrp_multi_level.model_mrp_planned_order
 #: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_inventory__planned_order_ids
 #: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_inventory_procure_item__planned_order_id
+#: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_production__planned_order_id
 #: model:ir.model.fields,field_description:mrp_multi_level.field_product_mrp_area__planned_order_ids
 msgid "Planned Order"
 msgstr ""
 
 #. module: mrp_multi_level
+#: code:addons/mrp_multi_level/models/mrp_inventory.py:0
+#: model:ir.actions.act_window,name:mrp_multi_level.mrp_planned_order_action
+#: model:ir.ui.menu,name:mrp_multi_level.menu_mrp_planned_order
 #: model_terms:ir.ui.view,arch_db:mrp_multi_level.product_mrp_area_form
+#, python-format
 msgid "Planned Orders"
 msgstr ""
 
@@ -562,6 +618,7 @@ msgstr ""
 
 #. module: mrp_multi_level
 #: model:ir.actions.act_window,name:mrp_multi_level.act_mrp_inventory_procure
+#: model:ir.actions.act_window,name:mrp_multi_level.act_mrp_inventory_procure_planned_order
 msgid "Procure"
 msgstr ""
 
@@ -576,6 +633,7 @@ msgid "Procurement Request"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_inventory_procure_item__supply_method__manufacture
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__product_mrp_area__supply_method__manufacture
 msgid "Produce"
 msgstr ""
@@ -613,6 +671,7 @@ msgstr ""
 
 #. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_inventory__product_mrp_area_id
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_planned_order_view_search
 msgid "Product Parameters"
 msgstr ""
 
@@ -628,12 +687,19 @@ msgid "Product UoM"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model,name:mrp_multi_level.model_mrp_production
+msgid "Production Order"
+msgstr ""
+
+#. module: mrp_multi_level
+#: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_inventory_procure_item__supply_method__pull_push
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_planned_order__mrp_action__pull_push
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__product_mrp_area__supply_method__pull_push
 msgid "Pull & Push"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_inventory_procure_item__supply_method__pull
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_planned_order__mrp_action__pull
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__product_mrp_area__supply_method__pull
 msgid "Pull From"
@@ -657,6 +723,7 @@ msgid "Purchase Orders"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_inventory_procure_item__supply_method__push
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_planned_order__mrp_action__push
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__product_mrp_area__supply_method__push
 msgid "Push To"
@@ -713,6 +780,11 @@ msgid "Run MRP"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:res.groups,name:mrp_multi_level.group_mrp_multi_level_run
+msgid "Run MRP Manually"
+msgstr ""
+
+#. module: mrp_multi_level
 #: model:ir.ui.menu,name:mrp_multi_level.menu_mrp_multi_level
 #: model_terms:ir.ui.view,arch_db:mrp_multi_level.view_run_mrp_multi_level_wizard
 msgid "Run MRP Multi Level"
@@ -731,7 +803,9 @@ msgid "SF-2"
 msgstr ""
 
 #. module: mrp_multi_level
+#: code:addons/mrp_multi_level/wizards/mrp_multi_level.py:0
 #: model:ir.model.fields,field_description:mrp_multi_level.field_product_mrp_area__mrp_minimum_stock
+#, python-format
 msgid "Safety Stock"
 msgstr ""
 
@@ -753,6 +827,12 @@ msgid ""
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_move__origin
+#: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_planned_order__origin
+msgid "Source Document"
+msgstr ""
+
+#. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_inventory__initial_on_hand_qty
 msgid "Starting Inventory"
 msgstr ""
@@ -768,6 +848,11 @@ msgid "Stock Move"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model,name:mrp_multi_level.model_stock_rule
+msgid "Stock Rule"
+msgstr ""
+
+#. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_product_mrp_area__main_supplierinfo_id
 msgid "Supplier Info"
 msgstr ""
@@ -779,7 +864,10 @@ msgid "Supply"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_inventory__supply_method
+#: model:ir.model.fields,field_description:mrp_multi_level.field_mrp_inventory_procure_item__supply_method
 #: model:ir.model.fields,field_description:mrp_multi_level.field_product_mrp_area__supply_method
+#: model_terms:ir.ui.view,arch_db:mrp_multi_level.mrp_inventory_search
 msgid "Supply Method"
 msgstr ""
 
@@ -818,6 +906,11 @@ msgid "To procure"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.actions.server,name:mrp_multi_level.action_server_planned_order_toggle_fixed
+msgid "Toggle Fixed"
+msgstr ""
+
+#. module: mrp_multi_level
 #: model:ir.model.fields,field_description:mrp_multi_level.field_product_mrp_area__mrp_transit_delay
 msgid "Transit Delay"
 msgstr ""
@@ -828,6 +921,7 @@ msgid "Type"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:ir.model.fields.selection,name:mrp_multi_level.selection__mrp_inventory_procure_item__supply_method__none
 #: model:ir.model.fields.selection,name:mrp_multi_level.selection__product_mrp_area__supply_method__none
 msgid "Undefined"
 msgstr ""
@@ -838,12 +932,20 @@ msgid "Unit of Measure"
 msgstr ""
 
 #. module: mrp_multi_level
+#: model:product.product,uom_name:mrp_multi_level.product_product_av_11
+#: model:product.product,uom_name:mrp_multi_level.product_product_av_12
+#: model:product.product,uom_name:mrp_multi_level.product_product_av_21
+#: model:product.product,uom_name:mrp_multi_level.product_product_av_22
 #: model:product.product,uom_name:mrp_multi_level.product_product_fp_1
 #: model:product.product,uom_name:mrp_multi_level.product_product_fp_2
 #: model:product.product,uom_name:mrp_multi_level.product_product_pp_1
 #: model:product.product,uom_name:mrp_multi_level.product_product_pp_2
 #: model:product.product,uom_name:mrp_multi_level.product_product_sf_1
 #: model:product.product,uom_name:mrp_multi_level.product_product_sf_2
+#: model:product.template,uom_name:mrp_multi_level.product_product_av_11_product_template
+#: model:product.template,uom_name:mrp_multi_level.product_product_av_12_product_template
+#: model:product.template,uom_name:mrp_multi_level.product_product_av_21_product_template
+#: model:product.template,uom_name:mrp_multi_level.product_product_av_22_product_template
 #: model:product.template,uom_name:mrp_multi_level.product_product_fp_1_product_template
 #: model:product.template,uom_name:mrp_multi_level.product_product_fp_2_product_template
 #: model:product.template,uom_name:mrp_multi_level.product_product_pp_1_product_template

@@ -34,9 +34,13 @@ msgstr ""
 #. module: mrp_production_grouped_by_product
 #: model:ir.model,name:mrp_production_grouped_by_product.model_mrp_production
 #, fuzzy
-#| msgid "Manufacturing Order"
 msgid "Production Order"
 msgstr "Orden de fabricación"
+
+#. module: mrp_production_grouped_by_product
+#: model:ir.model,name:mrp_production_grouped_by_product.model_stock_move
+msgid "Stock Move"
+msgstr ""
 
 #. module: mrp_production_grouped_by_product
 #: model:ir.model,name:mrp_production_grouped_by_product.model_stock_rule

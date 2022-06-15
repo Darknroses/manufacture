@@ -6,7 +6,7 @@
 
 from datetime import date, timedelta
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class MrpInventory(models.Model):
@@ -62,6 +62,12 @@ class MrpInventory(models.Model):
     planned_order_ids = fields.One2many(
         comodel_name="mrp.planned.order", inverse_name="mrp_inventory_id", readonly=True
     )
+    supply_method = fields.Selection(
+        string="Supply Method",
+        related="product_mrp_area_id.supply_method",
+        readonly=True,
+        store=True,
+    )
 
     def _compute_uom_id(self):
         for rec in self:
@@ -91,10 +97,27 @@ class MrpInventory(models.Model):
                 order_release_date = rec.mrp_area_id.calendar_id.plan_days(
                     -delay, dt_date
                 ).date()
-            else:
+            elif delay:
                 order_release_date = fields.Date.from_string(rec.date) - timedelta(
                     days=delay
                 )
+            else:
+                order_release_date = rec.date
             if order_release_date < today:
                 order_release_date = today
             rec.order_release_date = order_release_date
+
+    def action_open_planned_orders(self):
+        planned_order_ids = []
+        for rec in self:
+            planned_order_ids += rec.planned_order_ids.ids
+
+        domain = [("id", "in", planned_order_ids)]
+
+        return {
+            "name": _("Planned Orders"),
+            "type": "ir.actions.act_window",
+            "res_model": "mrp.planned.order",
+            "view_mode": "tree,form",
+            "domain": domain,
+        }

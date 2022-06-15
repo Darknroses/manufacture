@@ -7,9 +7,9 @@ MRP Multi Level
    !! changes will be overwritten.                   !!
    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-.. |badge1| image:: https://img.shields.io/badge/maturity-Production%2FStable-green.png
+.. |badge1| image:: https://img.shields.io/badge/maturity-Beta-yellow.png
     :target: https://odoo-community.org/page/development-status
-    :alt: Production/Stable
+    :alt: Beta
 .. |badge2| image:: https://img.shields.io/badge/licence-LGPL--3-blue.png
     :target: http://www.gnu.org/licenses/lgpl-3.0-standalone.html
     :alt: License: LGPL-3
@@ -81,6 +81,60 @@ To launch replenishment orders (moves, purchases, production orders...):
 
 Changelog
 =========
+
+13.0.1.5.0 (2020-04-09)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+**Features**
+
+- Show *Run MRP Multi Level* menu only to a specific new security group *Run MRP Manually*. (`#492 <https://github.com/OCA/manufacture/issues/492>`_)
+
+
+13.0.1.4.0 (2020-03-26)
+~~~~~~~~~~~~~~~~~~~~~~~
+  * Add menu entry for planned orders
+  * Add button to navigate from planned orders to linked manufacturing orders
+  * Add action to convert planned orders to fixed
+  * When changing the due date in a planned order the release date is recomputed
+
+13.0.1.3.0 (2020-03-02)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Minor changes"
+  (`#470 <https://github.com/OCA/manufacture/pull/470>`_).
+
+  * Planned Order release and due date become required.
+  * Add button to Product MRP Area to update MOQ from Supplier Info.
+  * Link Manufacturing Orders with Planned Orders.
+  * Allow Mrp Inventory Procure Wizard to be used from other models.
+  * Make MRP Inventory creation more extensible.
+  * Main Supplier computation (v13 requires explicit False definitions)
+
+13.0.1.2.0 (2020-02-20)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [IMP] Minor changes
+  (`#468 <https://github.com/OCA/manufacture/pull/468>`_).
+
+  * Planned Orders become fixed on manual creation by default
+  * Released Quantity becomes readonly
+  * Add product reference if Planned Order name is not defined on bom explosion
+
+13.0.1.1.0 (2020-02-21)
+~~~~~~~~~~~~~~~~~~~~~~~
+
+* [FIX] Minor changes
+  (`#469 <https://github.com/OCA/manufacture/pull/469>`_).
+
+  * Fix Main supplier computation in multi company
+  * Drop Triplicated field in search view
+
+
+* [IMP] Minor changes
+  (`#463 <https://github.com/OCA/manufacture/pull/463>`_).
+
+  * Show supply method on MRP Inventory
+  * Allow no-MRP users to look into Products
 
 13.0.1.0.0 (2019-12-18)
 ~~~~~~~~~~~~~~~~~~~~~~~
@@ -171,6 +225,7 @@ Contributors
 * Wim Audenaert <wim.audenaert@ucamco.com>
 * Jordi Ballester <jordi.ballester@forgeflow.com>
 * Lois Rilo <lois.rilo@forgeflow.com>
+* Héctor Villarreal <hector.villarreal@forgeflow.com>
 
 Maintainers
 ~~~~~~~~~~~

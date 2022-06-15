@@ -8,6 +8,7 @@ from math import ceil
 
 from odoo import _, api, fields, models
 from odoo.exceptions import ValidationError
+from odoo.osv import expression
 
 
 class ProductMRPArea(models.Model):
@@ -134,6 +135,27 @@ class ProductMRPArea(models.Model):
             for area in self
         ]
 
+    @api.model
+    def _name_search(
+        self, name, args=None, operator="ilike", limit=100, name_get_uid=None
+    ):
+        if operator in ("ilike", "like", "=", "=like", "=ilike"):
+            args = expression.AND(
+                [
+                    args or [],
+                    [
+                        "|",
+                        "|",
+                        ("product_id.name", operator, name),
+                        ("product_id.default_code", operator, name),
+                        ("mrp_area_id.name", operator, name),
+                    ],
+                ]
+            )
+        return super(ProductMRPArea, self)._name_search(
+            name, args=args, operator=operator, limit=limit, name_get_uid=name_get_uid
+        )
+
     def _compute_mrp_lead_time(self):
         produced = self.filtered(lambda r: r.supply_method == "manufacture")
         purchased = self.filtered(lambda r: r.supply_method == "buy")
@@ -157,8 +179,7 @@ class ProductMRPArea(models.Model):
             proc_loc = rec.location_proc_id or rec.mrp_area_id.location_id
             values = {
                 "warehouse_id": rec.mrp_area_id.warehouse_id,
-                "company_id": self.env.user.company_id.id,
-                # TODO: better way to get company
+                "company_id": rec.mrp_area_id.company_id,
             }
             rule = group_obj._get_rule(rec.product_id, proc_loc, values)
             rec.supply_method = rule.action if rule else "none"
@@ -169,11 +190,17 @@ class ProductMRPArea(models.Model):
         for rec in self.filtered(lambda r: r.supply_method == "buy"):
             suppliers = rec.product_id.seller_ids.filtered(
                 lambda r: (not r.product_id or r.product_id == rec.product_id)
+                and (not r.company_id or r.company_id == rec.company_id)
             )
             if not suppliers:
+                rec.main_supplierinfo_id = False
+                rec.main_supplier_id = False
                 continue
             rec.main_supplierinfo_id = suppliers[0]
             rec.main_supplier_id = suppliers[0].name
+        for rec in self.filtered(lambda r: r.supply_method != "buy"):
+            rec.main_supplierinfo_id = False
+            rec.main_supplier_id = False
 
     def _adjust_qty_to_order(self, qty_to_order):
         self.ensure_one()
@@ -191,3 +218,51 @@ class ProductMRPArea(models.Model):
         if self.mrp_maximum_order_qty and qty_to_order > self.mrp_maximum_order_qty:
             return self.mrp_maximum_order_qty
         return qty_to_order
+
+    def update_min_qty_from_main_supplier(self):
+        for rec in self.filtered(
+            lambda r: r.main_supplierinfo_id and r.supply_method == "buy"
+        ):
+            rec.mrp_minimum_order_qty = rec.main_supplierinfo_id.min_qty
+
+    def _in_stock_moves_domain(self):
+        self.ensure_one()
+        locations = self.mrp_area_id._get_locations()
+        return [
+            ("product_id", "=", self.product_id.id),
+            ("state", "not in", ["done", "cancel"]),
+            ("product_qty", ">", 0.00),
+            ("location_id", "not in", locations.ids),
+            ("location_dest_id", "in", locations.ids),
+        ]
+
+    def _out_stock_moves_domain(self):
+        self.ensure_one()
+        locations = self.mrp_area_id._get_locations()
+        return [
+            ("product_id", "=", self.product_id.id),
+            ("state", "not in", ["done", "cancel"]),
+            ("product_qty", ">", 0.00),
+            ("location_id", "in", locations.ids),
+            ("location_dest_id", "not in", locations.ids),
+        ]
+
+    def action_view_stock_moves(self, domain):
+        self.ensure_one()
+        action = self.env.ref("stock.stock_move_action").read()[0]
+        action["domain"] = domain
+        action["context"] = {}
+        return action
+
+    def action_view_incoming_stock_moves(self):
+        return self.action_view_stock_moves(self._in_stock_moves_domain())
+
+    def action_view_outgoing_stock_moves(self):
+        return self.action_view_stock_moves(self._out_stock_moves_domain())
+
+    def _to_be_exploded(self):
+        self.ensure_one()
+        if self.supply_method == "manufacture":
+            return True
+        else:
+            return False

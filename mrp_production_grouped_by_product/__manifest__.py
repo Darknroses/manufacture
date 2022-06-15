@@ -5,10 +5,10 @@
 
 {
     "name": "Production Grouped By Product",
-    "version": "13.0.1.0.0",
+    "version": "13.0.1.0.2",
     "category": "MRP",
     "author": "Tecnativa, " "Odoo Community Association (OCA)",
-    "website": "https://github.com/oca/manufacture",
+    "website": "https://github.com/OCA/manufacture",
     "license": "AGPL-3",
     "depends": ["mrp"],
     "data": ["views/stock_picking_type_views.xml"],

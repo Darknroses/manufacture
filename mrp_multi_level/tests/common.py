@@ -32,6 +32,11 @@ class TestMrpMultiLevelCommon(SavepointCase):
         cls.sf_2 = cls.env.ref("mrp_multi_level.product_product_sf_2")
         cls.pp_1 = cls.env.ref("mrp_multi_level.product_product_pp_1")
         cls.pp_2 = cls.env.ref("mrp_multi_level.product_product_pp_2")
+        cls.product_4b = cls.env.ref("product.product_product_4b")
+        cls.av_11 = cls.env.ref("mrp_multi_level.product_product_av_11")
+        cls.av_12 = cls.env.ref("mrp_multi_level.product_product_av_12")
+        cls.av_21 = cls.env.ref("mrp_multi_level.product_product_av_21")
+        cls.av_22 = cls.env.ref("mrp_multi_level.product_product_av_22")
         cls.company = cls.env.ref("base.main_company")
         cls.mrp_area = cls.env.ref("mrp_multi_level.mrp_area_stock_wh0")
         cls.vendor = cls.env.ref("mrp_multi_level.res_partner_lazer_tech")
@@ -181,6 +186,35 @@ class TestMrpMultiLevelCommon(SavepointCase):
                 "mrp_qty_multiple": 5.0,
             }
         )
+        # Another product:
+        cls.product_tz = cls.product_obj.create(
+            {
+                "name": "Product Timezone",
+                "type": "product",
+                "list_price": 100.0,
+                "route_ids": [(6, 0, [route_buy])],
+                "seller_ids": [(0, 0, {"name": vendor1.id, "price": 20.0})],
+            }
+        )
+        cls.product_mrp_area_obj.create(
+            {"product_id": cls.product_tz.id, "mrp_area_id": cls.cases_area.id}
+        )
+        # Product to test special case with Purchase Uom:
+        cls.prod_uom_test = cls.product_obj.create(
+            {
+                "name": "Product Uom Test",
+                "type": "product",
+                "uom_id": cls.env.ref("uom.product_uom_unit").id,
+                "uom_po_id": cls.env.ref("uom.product_uom_dozen").id,
+                "list_price": 150.0,
+                "produce_delay": 5.0,
+                "route_ids": [(6, 0, [route_buy])],
+                "seller_ids": [(0, 0, {"name": vendor1.id, "price": 20.0})],
+            }
+        )
+        cls.product_mrp_area_obj.create(
+            {"product_id": cls.prod_uom_test.id, "mrp_area_id": cls.mrp_area.id}
+        )
 
         # Create pickings for Scenario 1:
         dt_base = cls.calendar.plan_days(3 + 1, datetime.today())
@@ -201,7 +235,7 @@ class TestMrpMultiLevelCommon(SavepointCase):
             cls.product_scenario_1, 18, dt_next_group, location=cls.cases_loc
         )
 
-        # Create test picking for FP-1 and FP-2:
+        # Create test picking for FP-1, FP-2 and Desk(steel, black):
         res = cls.calendar.plan_days(7 + 1, datetime.today().replace(hour=0))
         date_move = res.date()
         cls.picking_1 = cls.stock_picking_obj.create(
@@ -235,6 +269,20 @@ class TestMrpMultiLevelCommon(SavepointCase):
                             "date": date_move,
                             "product_uom": cls.fp_2.uom_id.id,
                             "product_uom_qty": 15,
+                            "location_id": cls.stock_location.id,
+                            "location_dest_id": cls.customer_location.id,
+                        },
+                    ),
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Test move product-4b",
+                            "product_id": cls.product_4b.id,
+                            "date_expected": date_move,
+                            "date": date_move,
+                            "product_uom": cls.product_4b.uom_id.id,
+                            "product_uom_qty": 150,
                             "location_id": cls.stock_location.id,
                             "location_dest_id": cls.customer_location.id,
                         },
@@ -315,6 +363,30 @@ class TestMrpMultiLevelCommon(SavepointCase):
                             "date_planned": date_po,
                             "product_qty": 5.0,
                             "product_uom": cls.pp_2.uom_id.id,
+                            "price_unit": 25.0,
+                        },
+                    )
+                ],
+            }
+        )
+        # Create Test PO for special case Puchase uom:
+        # Remember that prod_uom_test had a UoM of units but it is purchased in dozens.
+        # For this reason buying 1 quantity of it, means to have 12 units in stock.
+        date_po = cls.calendar.plan_days(1 + 1, datetime.today().replace(hour=0)).date()
+        cls.po_uom = cls.po_obj.create(
+            {
+                "name": "Test PO-002",
+                "partner_id": cls.vendor.id,
+                "order_line": [
+                    (
+                        0,
+                        0,
+                        {
+                            "name": "Product Uom Test line",
+                            "product_id": cls.prod_uom_test.id,
+                            "date_planned": date_po,
+                            "product_qty": 1.0,
+                            "product_uom": cls.prod_uom_test.uom_po_id.id,
                             "price_unit": 25.0,
                         },
                     )

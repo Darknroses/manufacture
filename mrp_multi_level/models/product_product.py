@@ -10,7 +10,7 @@ from odoo import fields, models
 class Product(models.Model):
     _inherit = "product.product"
 
-    llc = fields.Integer(string="Low Level Code", default=0)
+    llc = fields.Integer(string="Low Level Code", default=0, index=True)
     manufacturing_order_ids = fields.One2many(
         comodel_name="mrp.production",
         inverse_name="product_id",
@@ -36,6 +36,17 @@ class Product(models.Model):
     def _compute_mrp_area_count(self):
         for rec in self:
             rec.mrp_area_count = len(rec.mrp_area_ids)
+
+    def write(self, values):
+        res = super().write(values)
+        if values.get("active") is False:
+            parameters = (
+                self.env["product.mrp.area"]
+                .sudo()
+                .search([("product_id", "in", self.ids)])
+            )
+            parameters.write({"active": False})
+        return res
 
     def action_view_mrp_area_parameters(self):
         self.ensure_one()
