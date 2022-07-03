@@ -49,7 +49,7 @@ addon | version | maintainers | summary
 [mrp_workorder_sequence](mrp_workorder_sequence/) | 12.0.1.0.0 | [![lreficent](https://github.com/lreficent.png?size=30px)](https://github.com/lreficent) | adds sequence to production work orders.
 [product_mrp_info](product_mrp_info/) | 12.0.1.0.0 | [![lreficent](https://github.com/lreficent.png?size=30px)](https://github.com/lreficent) | Adds smart button in product form view linking to manufacturing order list.
 [product_quick_bom](product_quick_bom/) | 12.0.1.0.0 | [![sebastienbeau](https://github.com/sebastienbeau.png?size=30px)](https://github.com/sebastienbeau) [![kevinkhao](https://github.com/kevinkhao.png?size=30px)](https://github.com/kevinkhao) | Create the bom directly from the product
-[quality_control](quality_control/) | 12.0.1.4.0 |  | Generic infrastructure for quality tests.
+[quality_control](quality_control/) | 12.0.1.5.0 |  | Generic infrastructure for quality tests.
 [quality_control_issue](quality_control_issue/) | 12.0.1.0.0 | [![lreficent](https://github.com/lreficent.png?size=30px)](https://github.com/lreficent) | Allow to manage and report Quality Control Issues.
 [quality_control_mrp](quality_control_mrp/) | 12.0.1.0.0 |  | MRP extension for quality control
 [quality_control_stock](quality_control_stock/) | 12.0.1.0.2 |  | Quality control - Stock
@@ -58,6 +58,7 @@ addon | version | maintainers | summary
 [repair_default_terms_conditions](repair_default_terms_conditions/) | 12.0.1.0.0 | [![marcelsavegnago](https://github.com/marcelsavegnago.png?size=30px)](https://github.com/marcelsavegnago) | This module allows repair default terms & conditions
 [repair_discount](repair_discount/) | 12.0.1.0.0 |  | Repair Discount
 [repair_payment_term](repair_payment_term/) | 12.0.1.0.0 | [![mileo](https://github.com/mileo.png?size=30px)](https://github.com/mileo) | This module add to Repair Orders the *Payment Term* field
+[repair_quality_control_issue](repair_quality_control_issue/) | 12.0.1.0.0 | [![cubells](https://github.com/cubells.png?size=30px)](https://github.com/cubells) | Add the possibility to create repairs orders from quality control issues.
 [repair_refurbish](repair_refurbish/) | 12.0.1.1.3 |  | Create refurbished products during repair
 [repair_timeline](repair_timeline/) | 12.0.1.0.1 | [![marcelsavegnago](https://github.com/marcelsavegnago.png?size=30px)](https://github.com/marcelsavegnago) | Add timeline view
 [stock_mts_mto_rule_mrp](stock_mts_mto_rule_mrp/) | 12.0.1.0.0 |  | Add support for MTS+MTO route on manufacturing
