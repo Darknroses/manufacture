@@ -15,7 +15,9 @@ class MrpBomLine(models.Model):
         "product.product", help="Technical field to store previous value of product_id"
     )
     component_template_id = fields.Many2one(
-        "product.template", "Component (product template)"
+        "product.template",
+        "Component (product template)",
+        domain="[('id', '!=', parent_product_tmpl_id)]",
     )
     match_on_attribute_ids = fields.Many2many(
         "product.attribute",
@@ -28,6 +30,18 @@ class MrpBomLine(models.Model):
         related=None,
         compute="_compute_product_uom_category_id",
     )
+
+    @api.constrains("component_template_id")
+    def _check_component_template_recursion(self):
+        for line in self:
+            if line.component_template_id == line.parent_product_tmpl_id:
+                raise ValidationError(
+                    _(
+                        "Component template must be different from BOM "
+                        "product template. Please check BOM: %s BOM Line: %s"
+                    )
+                    % (line, line.bom_id)
+                )
 
     @api.depends("product_id", "component_template_id")
     def _compute_product_uom_category_id(self):
@@ -145,6 +159,18 @@ class MrpBomLine(models.Model):
     def _onchange_bom_product_template_attribute_value_ids_check_variants(self):
         if self.bom_product_template_attribute_value_ids:
             self._check_variants_validity()
+
+    def _skip_bom_line(self, product):
+        # Make this method compatible to work with NewIds
+        res = super()._skip_bom_line(product)
+
+        return res and (
+            len(
+                set(product.product_template_attribute_value_ids.ids)
+                & set(self.bom_product_template_attribute_value_ids.ids)
+            )
+            != len(self.bom_product_template_attribute_value_ids.attribute_id)
+        )
 
 
 class MrpBom(models.Model):
